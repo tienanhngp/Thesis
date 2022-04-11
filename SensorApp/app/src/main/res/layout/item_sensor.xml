@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="10dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:id="@+id/tvSenName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:text="sensor"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/imgSen"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:src="@drawable/tem"
+            android:layout_below="@+id/tvSenName"
+            android:layout_centerHorizontal="true">
+
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSenVal"
+            android:text="senval(30°C)"
+            android:layout_below="@+id/imgSen"
+            android:textSize="30sp"
+            android:textAllCaps="false"
+            android:textColor="@color/firebrick"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true">
+
+        </TextView>
+
+
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

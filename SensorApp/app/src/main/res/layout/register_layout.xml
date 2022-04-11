@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/layout_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng ký"
+        android:textSize="40sp"
+        android:layout_gravity="center"
+        android:textColor="#022723">
+
+    </TextView>
+
+    <com.google.android.material.textfield.TextInputEditText
+
+        android:id="@+id/etRegEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="Tên đăng nhập"
+        android:textSize="24sp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="50dp"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
+        >
+    </com.google.android.material.textfield.TextInputEditText>
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etRegPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="Mật khẩu"
+        android:textSize="24sp"
+        android:layout_marginBottom="60dp"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
+
+        >
+    </com.google.android.material.textfield.TextInputEditText>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnReg"
+        android:layout_width="124dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_button_bg"
+        android:text="Đăng ký"
+        android:textColor="#4996EF"
+        android:textSize="18sp"
+        android:layout_marginBottom="30dp">
+
+
+    </androidx.appcompat.widget.AppCompatButton>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bạn đã có tài khoản?"
+            >
+        </TextView>
+        <Button
+            android:id="@+id/btnLogInHere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng nhập"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:textAllCaps="false">
+        </Button>
+
+    </LinearLayout>
+
+</LinearLayout>
