@@ -17,19 +17,18 @@
 
 // FirebaseDemo_ESP8266 is a sample that demo the different functions
 // of the FirebaseArduino API.
-
+#include "FirebaseESP8266.h"
 #include <ESP8266WiFi.h>
-#include <FirebaseArduino.h>
-#include <ArduinoJson.h>
+
+
 // Set these to run example.
 #define FIREBASE_HOST "test1-e9b0a-default-rtdb.firebaseio.com"
 #define FIREBASE_AUTH "cHqyetnoj6tsa3DVwjLO9TPhWoxzDYrb6fDj35q3"
-#define WIFI_SSID "TP-Link_06C0"
-#define WIFI_PASSWORD "42855507"
+#define WIFI_SSID "iphone"
+#define WIFI_PASSWORD "tienanh123"
 
-StaticJsonBuffer<256> jb;
-JsonObject& DHTSensor = jb.createObject();
-JsonObject& DHTSensorLog = jb.createObject();
+FirebaseData firebaseData;
+FirebaseJson json;
 
 
 void setup() {
@@ -37,37 +36,37 @@ void setup() {
 
   // connect to wifi.
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   } // wait for connect to wifi
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  Firebase.reconnectWiFi(true);
   
-  while(!Serial){
-    
-  }// wait for connect to Serial
+ 
   
 }
 
 
 
 void loop() {
-  
+
+
   if(Serial.available()){
+  
   String receiving = "";
   receiving = Serial.readString();
   
   int receivingTranform = receiving.toInt();
   Serial.println(receivingTranform);
-  int Tem = receivingTranform / 100;
-  int Hum = receivingTranform % 100;
-  DHTSensor["Tem"] = int(Tem);
-  DHTSensor["Hum"] = int(Hum);
-  Firebase.set("/DHTSensor",DHTSensor);
 
-  DHTSensorLog["Tem"] = int(Tem);
-  DHTSensorLog["Hum"] = int(Hum);
-  DHTSensorLog["Time"] = millis();
-  Firebase.push("/DHTSensorLog", DHTSensorLog);
+  int Light = receivingTranform % 10;
+  int SoilMos = receivingTranform / 1000;
+  int Temp = (receivingTranform / 10) % 100;
+  
+ 
+  Firebase.set(firebaseData, "/Light", Light);
+  Firebase.set(firebaseData, "/SoilMos", SoilMos);
+  Firebase.set(firebaseData, "/Temp", Temp);
   
   
   }

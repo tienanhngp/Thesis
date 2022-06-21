@@ -17,9 +17,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
     String temVal, soilMosVal, airQualityVal, lightVal;
@@ -57,11 +61,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 List<Sensor> list = new ArrayList<>();
+
+                String url = "http://api.airvisual.com/v2/nearest_city?key=7c87f60b-0a6c-42c6-9ec4-7a1505ac6d3c";
+                new AsyncHttpClient().get(url, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        airQualityVal = "0";
+                    }
+                });
+
+
                 temVal = datasnapshot.child("Temp").getValue().toString();
                 list.add(new Sensor(R.drawable.tem, "Nhiệt độ", temVal));
                 lightVal = datasnapshot.child("Light").getValue().toString();
                 list.add(new Sensor(R.drawable.light, "Ánh sáng", lightVal));
-                airQualityVal = datasnapshot.child("airQuality").getValue().toString();
+//                airQualityVal = datasnapshot.child("airQuality").getValue().toString();
                 list.add(new Sensor(R.drawable.air, "Chất lượng khí", airQualityVal));
                 soilMosVal = datasnapshot.child("SoilMos").getValue().toString();
                 list.add(new Sensor(R.drawable.humid1, "Độ ẩm đất", soilMosVal));
