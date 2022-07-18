@@ -37,7 +37,7 @@
             android:id="@+id/tvSenVal"
             android:text="senval(30°C)"
             android:layout_below="@+id/imgSen"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textAllCaps="false"
             android:textColor="@color/firebrick"
             android:textStyle="bold"

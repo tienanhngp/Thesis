@@ -62,28 +62,33 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 List<Sensor> list = new ArrayList<>();
 
-                String url = "http://api.airvisual.com/v2/nearest_city?key=7c87f60b-0a6c-42c6-9ec4-7a1505ac6d3c";
-                new AsyncHttpClient().get(url, new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        airQualityVal = "0";
-                    }
-                });
 
 
                 temVal = datasnapshot.child("Temp").getValue().toString();
-                list.add(new Sensor(R.drawable.tem, "Nhiệt độ", temVal));
+                list.add(new Sensor(R.drawable.tem, "Nhiệt độ", temVal + "°C"));
                 lightVal = datasnapshot.child("Light").getValue().toString();
-                list.add(new Sensor(R.drawable.light, "Ánh sáng", lightVal));
-//                airQualityVal = datasnapshot.child("airQuality").getValue().toString();
-                list.add(new Sensor(R.drawable.air, "Chất lượng khí", airQualityVal));
+                if(lightVal.equals("1")){
+                    list.add(new Sensor(R.drawable.light, "Ánh sáng", "Đủ sáng"));
+                }
+                if(lightVal.equals("2")){
+                    list.add(new Sensor(R.drawable.light, "Ánh sáng", "Cảnh báo"));
+                }
+                if(lightVal.equals("3")){
+                    list.add(new Sensor(R.drawable.light, "Ánh sáng", "Thiếu sáng"));
+                }
+                airQualityVal = datasnapshot.child("airQuality").getValue().toString();
+                if(airQualityVal.equals("1")){
+                    list.add(new Sensor(R.drawable.air, "Chất lượng khí","Bình thường"));
+                }
+                if(airQualityVal.equals("2")){
+                    list.add(new Sensor(R.drawable.air, "Chất lượng khí", "Cảnh báo"));
+                }
+                if(airQualityVal.equals("3")){
+                    list.add(new Sensor(R.drawable.air, "Chất lượng khí", "Nguy hiểm"));
+                }
                 soilMosVal = datasnapshot.child("SoilMos").getValue().toString();
-                list.add(new Sensor(R.drawable.humid1, "Độ ẩm đất", soilMosVal));
+                list.add(new Sensor(R.drawable.humid1, "Độ ẩm đất", soilMosVal + "%"));
 
                 mSensorAdapter.setData(list);
                 rcvSensor.setLayoutManager(gridLayoutManager);

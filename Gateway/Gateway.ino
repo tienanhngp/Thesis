@@ -1,4 +1,6 @@
 
+
+
 //
 // Copyright 2015 Google Inc.
 //
@@ -19,7 +21,7 @@
 // of the FirebaseArduino API.
 #include "FirebaseESP8266.h"
 #include <ESP8266WiFi.h>
-
+#include <MQ135.h>
 
 // Set these to run example.
 #define FIREBASE_HOST "test1-e9b0a-default-rtdb.firebaseio.com"
@@ -30,7 +32,7 @@
 FirebaseData firebaseData;
 FirebaseJson json;
 
-
+MQ135 airSensor = MQ135(A0);
 void setup() {
   Serial.begin(9600);
 
@@ -50,7 +52,10 @@ void setup() {
 
 void loop() {
 
-
+  
+  float ppm = airSensor.getPPM();
+  
+  
   if(Serial.available()){
   
   String receiving = "";
@@ -59,15 +64,24 @@ void loop() {
   int receivingTranform = receiving.toInt();
   Serial.println(receivingTranform);
 
+  
   int Light = receivingTranform % 10;
   int SoilMos = receivingTranform / 1000;
   int Temp = (receivingTranform / 10) % 100;
-  
+  int AirQual = checkAir(ppm);
  
   Firebase.set(firebaseData, "/Light", Light);
   Firebase.set(firebaseData, "/SoilMos", SoilMos);
   Firebase.set(firebaseData, "/Temp", Temp);
-  
+  Firebase.set(firebaseData, "/airQuality", AirQual);
   
   }
 }
+int checkAir(float ppm){
+  if(ppm < 100) 
+    return 1;
+  else if(ppm <= 150) 
+    return 2;
+  return 3;
+}
+  
